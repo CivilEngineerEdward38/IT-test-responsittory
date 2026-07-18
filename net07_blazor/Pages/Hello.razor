@@ -1,0 +1,28 @@
+@* razor component *@
+@* component có thê tái sử dụng, truyền tham số
+code c# trong @code
+binding dữ liệu bằng @tenBien
+ *@
+
+@page "/hello"
+
+<div class="container py-5">
+    <div class="card border-0 shadow-sm">
+        <div class="card-body text-center p-5">
+            <div class="display-6 mb-3">👋</div>
+
+            <h3 class="fw-bold text-primary mb-2">
+                Xin chào, @Name
+            </h3>
+
+            <p class="text-secondary mb-0">
+                Chào mừng bạn đến với ứng dụng Blazor.
+            </p>
+        </div>
+    </div>
+</div>
+
+@code{
+    [Parameter]
+    public string Name {get;set;}
+}

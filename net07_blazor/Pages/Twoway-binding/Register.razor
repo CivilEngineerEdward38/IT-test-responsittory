@@ -1,0 +1,39 @@
+@page "/twoway/register"
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <h4>Register</h4>
+            <EditForm Model="@model">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" class="form-control" @bind="@model.Username" @bind:event="oninput"/>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="text" class="form-control" @bind="@model.Email" @bind:event="oninput" />
+                </div>
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input type="text" class="form-control"  @bind="@model.Phone" @bind:event="oninput"/>
+                </div>
+                @*  gioi tinh  *@
+                @*  so thich  *@
+                @*  quoc gia  *@
+            </EditForm>
+
+        </div>
+        <div class="col-6">
+            <h4>Thông tin vừa nhập</h4>
+            <p>Username: @model.Username</p>
+            <p>Email:  @model.Email</p>
+            <p>Phone: @model.Phone</p>
+        </div>
+    </div>
+</div>
+
+@code {
+    public RegisterVM model = new RegisterVM();
+}

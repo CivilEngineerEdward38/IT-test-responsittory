@@ -1,0 +1,54 @@
+@* routeing trong blazor *@
+@* mỗi component có thể gắn với 1 route/url *@
+@* localhost:PORT/about *@
+@page "/about/{text:int?}/{status?}"
+
+@* int?-> about , about/123
+    int => about/số
+*@
+
+
+@* route parameter (tham số trên url) *@
+
+<div class="container">
+   @* <NavMenu/> *@
+
+
+    <div class="about">
+        <div class="about-content">
+            <div class="text-center mb-5">
+                <h1 class="display-4 fw-bold text-primary">About</h1>
+                <p class="lead text-secondary">
+                    Nội dung của page about.
+                </p>
+            </div>
+            <p>@name</p>
+            @* biến name trong c# ở @code sẽ được hiển thị chỗ này *@
+
+            <p>Param in url : @text</p>
+            <p>Param in url : @status</p>
+        </div>
+    </div>
+    <Hello/>
+    <Hello Name="Phát"/>
+    <Hello Name="Cybersoft"/>
+
+    @* <Infor/> *@
+    @*  hello Nga *@
+</div>
+
+@code {
+    @* cho c# biết thuộc tính này lấy giá trj từ param url *@
+    [Parameter]
+    public int? text { get; set; } = null;
+    [Parameter]
+    public string? status { get; set; }
+    string name = "phương nga";
+    void demo()
+    {
+        Console.WriteLine("hello");
+    }
+
+
+    
+}

@@ -1,0 +1,19 @@
+@page "/component/parent"
+
+<div class="container py-5">
+    <div class="card border-0 shadow-sm">
+        <div class="card-body text-center p-5">
+            <div class="display-6 mb-3">👋</div>
+
+            <h3 class="fw-bold text-primary mb-2">
+                Parent component
+            </h3>
+            @*  thẻ đầy đủ có đóng mở *@
+            <ChildComponent >
+                <p>Hello - nọi dung được truyền từ component cha</p>
+                <Hello/>
+            </ChildComponent>
+            
+        </div>
+    </div>
+</div>
