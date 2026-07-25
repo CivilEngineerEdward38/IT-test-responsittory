@@ -1,0 +1,9 @@
+
+::deep .active-nav{
+    /* color: blue; */
+    font-weight: 700;
+    text-decoration: underline;
+}
+/*  biên dịc và để trong file ten_project.styles.css */
+/*  có ::deep thì -> [xzzxcsd] .active-nav */
+/*  kho có ::deep thì ->  .active-nav[xzzxcsd] */
