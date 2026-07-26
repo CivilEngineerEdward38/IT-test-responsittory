@@ -1,0 +1,128 @@
+@page "/contact"
+@* @using Assignment07.Models *@
+
+<div class="container mt-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-8">
+
+            <div class="card shadow">
+
+                <div class="card-header bg-primary text-white text-center">
+                    <h3>Contact Form</h3>
+                </div>
+
+                <div class="card-body">
+
+                    <EditForm Model="@model" OnValidSubmit="HandleSubmit">
+
+                        <DataAnnotationsValidator />
+                        <ValidationSummary />
+
+                        <div class="mb-3">
+                            <label class="form-label">Full Name</label>
+                            <InputText class="form-control"
+                                       @bind-Value="model.FullName"
+                                       placeholder="Enter your full name" />
+                            <ValidationMessage For="@(()=>model.FullName)" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <InputText class="form-control"
+                                       @bind-Value="model.Email"
+                                       placeholder="Enter your email" />
+                            <ValidationMessage For="@(()=>model.Email)" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Phone Number</label>
+                            <InputText class="form-control"
+                                       @bind-Value="model.PhoneNumber"
+                                       placeholder="Enter your phone" />
+                            <ValidationMessage For="@(()=>model.PhoneNumber)" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Address</label>
+                            <InputText class="form-control"
+                                       @bind-Value="model.Address"
+                                       placeholder="Enter your address" />
+                            <ValidationMessage For="@(()=>model.Address)" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Message</label>
+                            <InputTextArea class="form-control"
+                                           rows="4"
+                                           @bind-Value="model.Message"
+                                           placeholder="Your message..." />
+                            <ValidationMessage For="@(()=>model.Message)" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Select Service</label>
+
+                            <InputSelect class="form-select"
+                                         @bind-Value="model.Service">
+
+                                <option value="">Choose Service</option>
+                                <option>Web Design</option>
+                                <option>SEO</option>
+                                <option>Marketing</option>
+
+                            </InputSelect>
+
+                            <ValidationMessage For="@(()=>model.Service)" />
+                        </div>
+
+                        <div class="form-check mb-4">
+
+                            <InputCheckbox class="form-check-input"
+                                           @bind-Value="model.AgreeTerms" />
+
+                            <label class="form-check-label">
+                                I agree to the Terms & Conditions
+                            </label>
+
+                            <ValidationMessage For="@(()=>model.AgreeTerms)" />
+
+                        </div>
+
+                        <button class="btn btn-primary w-100"
+                                type="submit">
+                            Submit
+                        </button>
+
+                    </EditForm>
+
+                    @if (!string.IsNullOrEmpty(message))
+                    {
+                        <div class="alert alert-success mt-3">
+                            @message
+                        </div>
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@code {
+
+    ContactModel model = new();
+
+    string message = "";
+
+    void HandleSubmit()
+    {
+        message = "Submit Successfully!";
+    }
+
+}
