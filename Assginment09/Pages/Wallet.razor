@@ -1,0 +1,167 @@
+@page "/wallet"
+
+<div class="container mt-5">
+    @if (!string.IsNullOrEmpty(errorMessage))
+    {
+        <div class="alert alert-danger">
+            @errorMessage
+        </div>
+    }
+    <div class="card bg-dark text-white p-4">
+        <h2 class="text-center">My Wallet</h2>
+        <h1 class="text-center text-warning">
+            $@balance.ToString("N2")
+        </h1>
+
+        <p class="text-center">
+            Total balance
+        </p>
+
+        <div class="text-center mb-4">
+            <button class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#depositModal">
+                Deposit
+            </button>
+            <button class="btn btn-danger me-2"
+                data-bs-toggle="modal" data-bs-target="#depositModal">
+                Withdraw
+            </button>
+        </div>
+
+        <h3 class="text-center">
+            Transaction History
+        </h3>
+        <table class="table table-dark table-striped mt-3">
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Amount</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in transactions)
+                {
+                    <tr>
+                        <td>
+                            @if (item.Type == "Deposit")
+                            {
+                                <span class="badge bg-success">Deposit</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger">
+                                    Withdraw
+                                </span>
+                            }
+                        </td>
+                        <td>
+                            $@item.Amount.ToString("N2")
+                        </td>
+                        <td>
+                            @item.Time.ToString("dd/MM/yyyy HH:mm")
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="modal fade" id="depositModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Deposit</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal">
+                </button>
+            </div>
+            <div class="modal-body">
+                <EditForm Model="@depositModel" OnValidSubmit="DepositMoney">
+                    <DataAnnotationsValidator />
+                    <ValidationSummary />
+                    <InputNumber class="form-control" @bind-Value="depositModel.Amount" />
+                    <ValidationMessage For="@(() => depositModel.Amount)" />
+                    <button class="btn btn-success mt-3" type="submit">
+                        Deposit
+                    </button>
+                </EditForm>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="withdrawModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Deposit</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal">
+                </button>
+            </div>
+            <div class="modal-body">
+                <EditForm Model="@withdrawModel" OnValidSubmit="WithdrawMoney">
+                    <DataAnnotationsValidator />
+                    <ValidationSummary />
+                    <InputNumber class="form-control" @bind-Value="withdrawModel.Amount" />
+                    <ValidationMessage For="@(() => withdrawModel.Amount)" />
+                    <button class="btn btn-success mt-3" type="submit">
+                        Withdraw
+                    </button>
+                </EditForm>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@code {
+    private decimal balance = 2499.73m;
+    @* state Transaction *@
+    private List<Transaction> transactions = new()
+    {
+        new Transaction
+        {
+            Type="Deposit",
+            Amount=500,
+            Time=DateTime.Now.AddDays(-2)
+        },
+
+        new Transaction
+        {
+            Type="Withdraw",
+            Amount=100,
+            Time=DateTime.Now.AddDays(-1)
+        }
+    };
+    private DepositModel depositModel = new();
+    private void DepositMoney()
+    {
+        errorMessage = "";
+        balance += depositModel.Amount;
+        AddTransaction("Deposit", depositModel.Amount);
+        depositModel = new();
+    }
+    private WithdrawModel withdrawModel = new WithdrawModel();
+    private string errorMessage = "";
+    private void WithdrawMoney()
+    {
+        if (withdrawModel.Amount > balance)
+        {
+            errorMessage = "Insuffficient balance";
+            return;
+        }
+        errorMessage = "";
+        balance -= withdrawModel.Amount;
+        AddTransaction("Withdraw", withdrawModel.Amount);
+        withdrawModel = new();
+    }
+    private void AddTransaction(string type, decimal amount)
+    {
+        transactions.Add(new Transaction
+        {
+            Type = type,
+            Amount = amount,
+            Time = DateTime.Now
+        });
+    }
+
+}
